@@ -1,4 +1,5 @@
 #!/bin/bash -e
+apt update
 
 apt -y install \
   build-essential \
@@ -28,12 +29,8 @@ cd easy-rsa/easyrsa3
 ./easyrsa init-pki
 ./easyrsa build-ca
 ./easyrsa build-server-full server
-./easyrsa build-client-full client
 ./easyrsa gen-dh
-openvpn --genkey --secret pki/private/ta.key
-
-mkdir -p /etc/openvpn
-cp -R pki /etc/openvpn
+openvpn --genkey --secret /etc/openvpn/pki/private/ta.key
 cd ../..
 
 cp server.conf /etc/openvpn/server.conf
