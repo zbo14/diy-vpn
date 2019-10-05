@@ -23,7 +23,7 @@ make install
 cd ..
 
 git clone https://github.com/OpenVPN/easy-rsa.git
-cp vars easy-rsa/earsa3/vars
+cp vars easy-rsa/easyrsa3/vars
 cd easy-rsa/easyrsa3
 
 ./easyrsa init-pki
