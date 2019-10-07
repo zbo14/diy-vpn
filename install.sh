@@ -11,7 +11,8 @@ apt -y install \
   liblz4-dev \
   net-tools \
   openssl \
-  wget
+  wget \
+  zip
 
 wget https://swupdate.openvpn.org/community/releases/openvpn-2.4.7.tar.gz
 gzip -dc openvpn-2.4.7.tar.gz | tar xvf -
