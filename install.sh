@@ -1,4 +1,5 @@
 #!/bin/bash -e
+
 apt update
 
 apt -y install \
@@ -18,7 +19,7 @@ wget https://swupdate.openvpn.org/community/releases/openvpn-2.4.7.tar.gz
 gzip -dc openvpn-2.4.7.tar.gz | tar xvf -
 
 cd openvpn-2.4.7
-./configure
+./configure --enable-systemd
 make
 make install
 cd ..
