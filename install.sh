@@ -5,6 +5,7 @@ apt update
 apt -y install \
   build-essential \
   git \
+  gnupg \
   lzop \
   liblzo2-dev \
   libpam-dev \
