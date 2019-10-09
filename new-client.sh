@@ -18,4 +18,5 @@ cp /etc/openvpn/pki/private/ta.key openvpn/private/ta.key
 
 zip -r openvpn.zip openvpn
 gpg --compress-algo none --symmetric openvpn.zip
+gpgconf --reload gpg-agent
 rm -r openvpn{,.zip}

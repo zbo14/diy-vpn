@@ -38,5 +38,9 @@ cd ../..
 
 cp server.conf /etc/openvpn/server.conf
 
+read -p "Enter the password for the server's private-key: " pass
+echo "$pass" > /etc/openvpn/pass
+chmod 600 /etc/openvpn/pass
+
 sysctl -w net.ipv4.ip_forward=1
 iptables -t nat -A POSTROUTING -s 10.9.0.0/24 -o eth0 -j MASQUERADE
