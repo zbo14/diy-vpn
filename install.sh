@@ -20,7 +20,7 @@ wget https://swupdate.openvpn.org/community/releases/openvpn-2.4.7.tar.gz
 gzip -dc openvpn-2.4.7.tar.gz | tar xvf -
 
 cd openvpn-2.4.7
-./configure --enable-systemd
+./configure
 make
 make install
 cd ..
@@ -38,9 +38,13 @@ cd ../..
 
 cp server.conf /etc/openvpn/server.conf
 
-read -p "Enter the password for the server's private-key: " pass
+read -p "Enter the password for the server's private-key: " -s pass
 echo "$pass" > /etc/openvpn/pass
 chmod 600 /etc/openvpn/pass
 
+cp diy-vpn.service /etc/systemd/system
+cp diy-vpn.sh /usr/bin
+
 sysctl -w net.ipv4.ip_forward=1
 iptables -t nat -A POSTROUTING -s 10.9.0.0/24 -o eth0 -j MASQUERADE
+systemctl daemon-reload

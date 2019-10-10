@@ -1,9 +1,9 @@
 # diy-vpn
 
 ## Install
-Clone the repo, `cd` into it, and `sudo sh install.sh`.
+Clone the repo, `cd` into it, and `sudo bash install.sh`.
 
-This will download and install [OpenVPN](https://openvpn.net/) and [easy-rsa](https://github.com/OpenVPN/easy-rsa). Then it will build the public-key infrastructure (PKI), create a certificate authority (CA), generate a key and sign a certificate for the VPN server. You'll be prompted for passwords during this process. Finally, it will enable IP forwarding and NAT routing on the host.
+This will download and install [OpenVPN](https://openvpn.net/) and [easy-rsa](https://github.com/OpenVPN/easy-rsa). Then it will build the public-key infrastructure (PKI), create a certificate authority (CA), generate a key and sign a certificate for the VPN server. You'll be prompted for CA and server passwords during this process. Finally, it will enable IP forwarding and NAT routing on the host.
 
 ## Usage
 
@@ -35,12 +35,12 @@ $ rm openvpn.zip{,.gpg}
 Now you can find the client files at `/etc/openvpn/`.
 
 ### Start the VPN server
-We can run OpenVPN as a systemd service:
+We can run `diy-vpn` as a systemd service:
 
 ```
-$ sudo systemctl start openvpn
-$ sudo systemctl stop openvpn
-$ sudo systemctl restart openvpn
+$ sudo systemctl start diy-vpn
+$ sudo systemctl stop diy-vpn
+$ sudo systemctl restart diy-vpn
 ```
 
 ### Connect the client
