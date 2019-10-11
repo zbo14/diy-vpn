@@ -3,3 +3,4 @@
 easy-rsa
 *.key
 openvpn*
+*.zip

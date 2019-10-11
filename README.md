@@ -15,24 +15,23 @@ To generate credentials for a client, `cd` into the project directory on the hos
 
 ```
 $ chmod u+x new-client.sh
-$ ./new-client USERNAME
+$ ./new-client <username>
 ```
 
 **Note:** you only have to `chmod` once.
 
-This constructs a directory with `client.conf`, the CA certificate, a private key and certificate for the client. Then it zips the directory and encrypts the zip file with a password you provide.
+This constructs a directory with `client.conf`, the CA certificate, a private key and certificate for the client. Then it zips and encrypts the directory with a password you provide.
 
-The client will need to get the encrypted zip file `openvpn.zip.gpg`. If you have SSH access to the VPN host, `sftp` should work.
+The client will need to get the encrypted zip file `<username>.zip`. If you have SSH access to the VPN host, `sftp` should work.
 
 Once the file's on the client device, run the following commands:
 
 ```
-$ gpg --compress-algo none --output openvpn.zip --decrypt openvpn.zip.gpg
-$ unzip -d /etc openvpn.zip
-$ rm openvpn.zip{,.gpg}
+$ unzip -d ~ <username>.zip
+$ rm <username>.zip
 ```
 
-Now you can find the client files at `/etc/openvpn/`.
+Now you can find the client files at `~/openvpn`.
 
 ### Start the VPN server
 We can run `diy-vpn` as a systemd service:
