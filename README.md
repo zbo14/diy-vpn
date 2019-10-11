@@ -43,4 +43,18 @@ $ sudo systemctl restart diy-vpn
 ```
 
 ### Connect the client
+Make sure you've added the client first!
+
+#### On macOS
+Download and install [Tunnelblick](https://tunnelblick.net/downloads.html) if you haven't already.
+
+Then drag-and-drop the `client.conf` file under "Configurations" on the left side of the app window. Tunnelblick should ask you a few questions and install the client configuration.
+
+#### On Ubuntu
 TODO
+
+## Contributing
+
+Please do!
+
+If you find a bug, think of an enhancement, or just have a question, feel free to [open an issue](https://github.com/zbo14/diy-vpn/issues/new). You're also welcome to [create a pull request](https://github.com/zbo14/diy-vpn/compare/develop...) addressing an issue. You should push your changes to a feature branch and request merge to `develop`.
