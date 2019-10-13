@@ -1,0 +1,6 @@
+clients
+.crt
+.DS_Store
+easy-rsa
+*.key
+openvpn*

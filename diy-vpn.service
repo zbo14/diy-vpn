@@ -1,0 +1,10 @@
+[Unit]
+Description=diy-vpn systemd service.
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/bin/diy-vpn.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
