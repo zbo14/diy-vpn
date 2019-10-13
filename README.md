@@ -11,18 +11,15 @@ This will download and install [OpenVPN](https://openvpn.net/) and [easy-rsa](ht
 If clients will be using `client.conf`, you'll need to replace `<my-server>` (L42) with the hostname or address of your VPN server. You can modify other configuration options in `client.conf` and `server.conf` if you feel so inclined.
 
 ### Add a client
-To generate credentials for a client, `cd` into the project directory on the host and run the following commands:
+To generate credentials for a client, `cd` into the project directory on the host and run the following command:
 
 ```
-$ chmod u+x new-client.sh
-$ ./new-client <username>
+$ sudo bash add-client.sh <username>
 ```
 
-**Note:** you only have to `chmod` once.
+This creates a directory with `client.conf`, the CA certificate, a private key and certificate for the client. Then it zips and encrypts the directory with a password you provide.
 
-This constructs a directory with `client.conf`, the CA certificate, a private key and certificate for the client. Then it zips and encrypts the directory with a password you provide.
-
-The client will need to get the encrypted zip file `<username>.zip`. If you have SSH access to the VPN host, `sftp` should work.
+The client will need to get the encrypted zip file `clients/<username>.zip`. If you have SSH access to the VPN host, `sftp` should work.
 
 Once the file's on the client device, run the following commands:
 
