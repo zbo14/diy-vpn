@@ -48,10 +48,29 @@ Make sure you've added the client first!
 #### On macOS
 Download and install [Tunnelblick](https://tunnelblick.net/downloads.html) if you haven't already.
 
-Then drag-and-drop the `client.conf` file under "Configurations" on the left side of the app window. Tunnelblick should ask you a few questions and install the client configuration.
+Then drag-and-drop the `client.conf` file into "Configurations" on the left side of the app window. Tunnelblick should ask you a few questions and install the client configuration.
 
 #### On Ubuntu
-TODO
+First, you'll want to install the Network Manager for OpenVPN.
+
+```
+$ sudo apt install network-manager-openvpn-gnome
+```
+
+1. Open "Settings" and click on "Network"
+1. Add (+) a VPN and select the "OpenVPN" option
+1. Name the VPN whatever you want
+1. Under "General", enter the address/hostname of the VPN server for "Gateway"
+1. Under "Authentication", choose the "CA certificate" `~/openvpn/ca.crt`
+1. Choose the "User certificate" `~/openvpn/client.crt`
+1. Choose the "User private key" `~/openvpn/private/client.key`
+1. You can save your "User key password" or click the (?) on the right and select another option (e.g. "Ask for this password every time")
+1. Click "Advanced" and then "TLS Authentication"
+1. Under "Additional TLS authentication or encryption", select "TLS-Auth" for "Mode"
+1. Choose `~/openvpn/private/ta.key` for "Key file"
+1. Select 1 for "Key Direction" and click OK!
+
+You should be able to connect to your VPN now!
 
 ## Contributing
 
