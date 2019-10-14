@@ -15,6 +15,8 @@ apt -y install \
   wget \
   zip
 
+rm -rf easy-rsa /etc/openvpn openvpn-2.4.7
+
 wget https://swupdate.openvpn.org/community/releases/openvpn-2.4.7.tar.gz
 gzip -dc openvpn-2.4.7.tar.gz | tar xvf -
 
@@ -33,6 +35,7 @@ cd easy-rsa/easyrsa3
 ./easyrsa build-server-full server
 ./easyrsa gen-dh
 openvpn --genkey --secret /etc/openvpn/pki/private/ta.key
+./easyrsa gen-crl
 cd ../..
 
 cp server.conf /etc/openvpn/server.conf
