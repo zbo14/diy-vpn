@@ -39,6 +39,15 @@ $ sudo systemctl stop diy-vpn
 $ sudo systemctl restart diy-vpn
 ```
 
+### Remove a client
+Run the following command:
+
+```
+$ sudo bash remove-client.sh <username>
+```
+
+This removes the .zip file from the clients directory and revokes the client certificate so it can no longer authenticate with the VPN server.
+
 ### Connect the client
 Make sure you've added the client first!
 

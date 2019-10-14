@@ -2,7 +2,7 @@
 
 if [[ -z $1 ]]
 then
-  echo "Usage: new-client USERNAME"
+  echo "Usage: add-client <username>"
   exit
 fi
 
