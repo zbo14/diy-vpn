@@ -16,7 +16,7 @@ echo "$privatekey" | wg pubkey > /etc/wireguard/publickey
 echo '[Interface]
 Address = '$2'/32
 DNS = 10.200.200.1
-Privatekey='$privatekey'
+PrivateKey='$privatekey'
 
 [Peer]
 AllowedIPs = 0.0.0.0/0

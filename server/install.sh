@@ -28,7 +28,7 @@ echo '[Interface]
 Address = 10.200.200.1/24
 ListenPort = 51820
 PostUp = bash /etc/wireguard/post-up.sh
-Privatekey='$privatekey'
+PrivateKey='$privatekey'
 SaveConfig = true' >> /etc/wireguard/wg0.conf
 
 echo "Server public key: $(cat /etc/wireguard/publickey)"

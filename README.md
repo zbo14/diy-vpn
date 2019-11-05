@@ -1,5 +1,5 @@
 # diy-vpn
-A tool to set up/run a [WireGuard](https://www.wireguard.com/) VPN server on Ubuntu and provision clients.
+A collection of scripts and config files to set up/run a [WireGuard](https://www.wireguard.com/) VPN server and provision clients.
 
 The VPN host runs its own [Unbound](https://en.wikipedia.org/wiki/Unbound_(DNS_server)) DNS server to handle client queries/prevent [DNS leaking](https://en.wikipedia.org/wiki/DNS_leak).
 
@@ -50,6 +50,23 @@ Assuming the client's been added, you can `cd` into the server subdirectory and 
 
 ## Client
 
+For mobile clients, download/install the WireGuard and configure it accordingly:
+
+```
+[Interface]
+Address = <client-tunnel-ip>/32
+DNS = 10.200.200.1
+PrivateKey = <client-private-key>
+
+[Peer]
+AllowedIPs = 0.0.0.0/0
+Endpoint = <server-public-ip>:51820
+PersistentKeepalive = 25
+PublicKey = <server-public-key>
+```
+
+The following sections apply to non-mobile clients.
+
 ### Configure
 Make sure you have WireGuard installed.
 
@@ -60,22 +77,26 @@ The `<gateway>` is the server's address or hostname, `<ip>` is the clients' tunn
 ### Usage
 
 #### Start
+##### Linux
 ```
 $ sudo systemctl start wg-quick@wg0.service
+```
 
-or
-
+##### macOS
+```
 $ sudo wg-quick up wg0
 ```
 
 This command brings up the WireGuard interface.
 
 #### Stop
+##### Linux
 ```
 $ sudo systemctl stop wg-quick@wg0.service
+```
 
-or
-
+##### macOS
+```
 $ sudo wg-quick down wg0
 ```
 
