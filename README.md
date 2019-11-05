@@ -1,114 +1,95 @@
 # diy-vpn
-A tool to set up/run a [WireGuard](https://www.wireguard.com/) VPN server on Ubuntu and provision clients.
 
-The VPN host runs its own [Unbound](https://en.wikipedia.org/wiki/Unbound_(DNS_server)) DNS server to handle client queries/prevent [DNS leaking](https://en.wikipedia.org/wiki/DNS_leak).
+A collection of scripts and config files to set up/run your own [OpenVPN](https://openvpn.net/) server and provision clients.
 
-## Server
+## Install
+Clone the repo, `cd` into it, and `sudo bash install.sh`.
 
-### Install
-Installation has been tested on Ubuntu 18.04.3 LTS (Bionic Beaver).
+This will download and install OpenVPN and [easy-rsa](https://github.com/OpenVPN/easy-rsa). Then it will build the public-key infrastructure (PKI), create a certificate authority (CA), generate a key and sign a certificate for the VPN server. You'll be prompted for CA and server passwords during this process.
 
-Clone the repo, `cd` into the server subdirectory, and `sudo bash install.sh`.
-
-The script installs WireGuard and Unbound. It then creates `/etc` subdirectories for WireGuard and Unbound, copies some files over, and generates private and public keys for the server.
-
-### Usage
-
-#### Start
-```
-$ sudo systemctl start wg-quick@wg0.service
-```
-
-This command brings up the WireGuard interface, sets iptables rules, enables IPv4 forwarding, and (re)starts the DNS server.
-
-#### Stop
-```
-$ sudo systemctl stop wg-quick@wg0.service
-```
-
-This command brings down the WireGuard interface and saves the current config.
-
-#### View status
-```
-$ sudo systemctl status wg-quick@wg0.service
-```
-
-#### View interface/clients
-```
-$ sudo wg show
-```
-
-#### Add a client
-Once you've started the VPN server, you can add clients that are allowed to authenticate/connect to the server. If you stop the server, it saves the current config so you don't have to re-add the clients when you restart it.
-
-First, `cd` into the server subdirectory and `sudo bash add.client.sh <ip> <pubkey>`.
-
-The `<ip>` is the client's tunnel address and `<pubkey>` is the client's public key generated during [configuration](#Configure).
-
-#### Remove a client
-Assuming the client's been added, you can `cd` into the server subdirectory and `sudo bash remove-client.sh <pubkey>` where `<pubkey>` is the client's public key.
-
-## Client
+## Usage
 
 ### Configure
-Make sure you have WireGuard installed.
+If clients will be using `client.conf`, you'll need to replace `<my-server>` (L42) with the hostname or address of your VPN server. You can modify other configuration options in `client.conf` and `server.conf` if you feel so inclined.
 
-Then clone the repo, `cd` into the client subdirectory, and `sudo bash configure.sh <gateway> <ip> <pubkey>`.
+### Add a client
+To generate credentials for a client, `cd` into the project directory on the host and run the following command:
 
-The `<gateway>` is the server's address or hostname, `<ip>` is the clients' tunnel address, and `<pubkey>` is the server's public key. The script creates a directory with the client config and generates private and public keys for the client.
-
-### Usage
-
-#### Start
 ```
-$ sudo systemctl start wg-quick@wg0.service
-
-or
-
-$ sudo wg-quick up wg0
+$ sudo bash add-client.sh <username>
 ```
 
-This command brings up the WireGuard interface.
+This creates a directory with `client.conf`, the CA certificate, a private key and certificate for the client. Then it zips and encrypts the directory with a password you provide.
 
-#### Stop
+The client will need to get the encrypted zip file `clients/<username>.zip`. If you have SSH access to the VPN host, `sftp` should work.
+
+Once the file's on the client device, run the following commands:
+
 ```
-$ sudo systemctl stop wg-quick@wg0.service
-
-or
-
-$ sudo wg-quick down wg0
+$ unzip -d ~ <username>.zip
+$ rm <username>.zip
 ```
 
-This command brings down the WireGuard interface and saves the current config.
+Now you can find the client files at `~/openvpn`.
 
-#### View interface/server
+### Start
 ```
-$ sudo wg show
+$ sudo systemctl start diy-vpn
 ```
+
+This command enables IPv4 forwarding, sets an iptables rule to allow NAT routing, and then starts the VPN server.
+
+### Stop
+```
+$ sudo systemctl stop diy-vpn
+```
+
+### View status
+```
+$ sudo systemctl status diy-vpn
+```
+
+### Remove a client
+`cd` into the project directory on the host and run the following command:
+
+```
+$ sudo bash remove-client.sh <username>
+```
+
+This removes the .zip file from the clients directory and revokes the client certificate so it can no longer authenticate with the VPN server.
+
+### Connect the client
+Make sure you've added the client first!
+
+#### On macOS
+Download and install [Tunnelblick](https://tunnelblick.net/downloads.html) if you haven't already.
+
+Then drag-and-drop the `client.conf`/`client.ovpn` file into "Configurations" on the left side of the app window. Tunnelblick should ask you a few questions and install the client configuration.
+
+#### On Ubuntu
+First, you'll want to install the Network Manager for OpenVPN.
+
+```
+$ sudo apt install network-manager-openvpn-gnome
+```
+
+1. Open "Settings" and click on "Network"
+1. Add (+) a VPN and select the "OpenVPN" option
+1. Name the VPN whatever you want
+1. Under "General", enter the address/hostname of the VPN server for "Gateway"
+1. Under "Authentication", choose the "CA certificate" `~/openvpn/ca.crt`
+1. Choose the "User certificate" `~/openvpn/client.crt`
+1. Choose the "User private key" `~/openvpn/private/client.key`
+1. You can save your "User key password" or click the (?) on the right and select another option (e.g. "Ask for this password every time")
+1. Click "Advanced" and then "TLS Authentication"
+1. Under "Additional TLS authentication or encryption", select "TLS-Auth" for "Mode"
+1. Choose `~/openvpn/private/ta.key` for "Key file"
+1. Select 1 for "Key Direction" and click OK!
+
+You should be able to connect to your VPN now!
 
 ## Contributing
-If you find a bug, have a question, or think of an improvement, feel free to open an issue!
 
-Here are a few ways you could make `diy-vpn` better:
-* [ ] Implement encryption of private keys
-* [ ] Configure Unbound to use DNS-over-TLS
-* [ ] Configure WireGuard peers to use preshared keys
+Please do!
 
-## Resources
-
-### WireGuard docs
-  * [Installation](https://www.wireguard.com/install/)
-  * [Quick start](https://www.wireguard.com/quickstart/)
-  * [Whitepaper](https://www.wireguard.com/papers/wireguard.pdf)
-
-### WireGuard tools
-  * [`wg` manpage](https://jlk.fjfi.cvut.cz/arch/manpages/man/wg.8)
-  * [`wg-quick` manpage](https://jlk.fjfi.cvut.cz/arch/manpages/man/wg-quick.8)
-
-### Arch Linux docs
-  * [WireGuard](https://wiki.archlinux.org/index.php/WireGuard)
-  * [Firewall with iptables](https://wiki.archlinux.org/index.php/Simple_stateful_firewall)
-  * [Unbound](https://wiki.archlinux.org/index.php/unbound)
-
-### Blog posts
-  * [this one](https://www.ckn.io/blog/2017/11/14/wireguard-vpn-typical-setup/)
+If you find a bug, think of an enhancement, or just have a question, feel free to [open an issue](https://github.com/zbo14/diy-vpn/issues/new). You're also welcome to [create a pull request](https://github.com/zbo14/diy-vpn/compare/develop...) addressing an issue. You should push your changes to a feature branch and request merge to `develop`.
