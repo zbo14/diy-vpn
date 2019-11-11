@@ -92,4 +92,4 @@ You should be able to connect to your VPN now!
 
 Please do!
 
-If you find a bug, think of an enhancement, or just have a question, feel free to [open an issue](https://github.com/zbo14/diy-vpn/issues/new). You're also welcome to [create a pull request](https://github.com/zbo14/diy-vpn/compare/develop...) addressing an issue. You should push your changes to a feature branch and request merge to `develop`.
+If you find a bug, think of an enhancement, or just have a question, feel free to open an issue.
