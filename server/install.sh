@@ -21,7 +21,7 @@ chown -R unbound:unbound /var/lib/unbound
 cp post-up.sh /etc/wireguard
 
 umask 277
-privatekey="$(wg genkey > privatekey)"
+privatekey="$(wg genkey)"
 echo "$privatekey" | wg pubkey > /etc/wireguard/publickey
 
 echo '[Interface]
