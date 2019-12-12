@@ -1,8 +1,8 @@
 #!/bin/bash -e
 
-apt-get update
 apt-get install -y software-properties-common
 add-apt-repository ppa:wireguard/wireguard
+apt-get update
 
 apt-get install -y \
   unbound \

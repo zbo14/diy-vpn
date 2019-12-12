@@ -50,7 +50,11 @@ Assuming the client's been added, you can `cd` into the server subdirectory and 
 
 ## Client
 
-For mobile clients, download/install the WireGuard and configure it accordingly:
+### Install
+
+If you're on Ubuntu, you can cd into the client subdirectory and `sudo bash install.sh`. Otherwise, follow the [install instructions](https://www.wireguard.com/install/) for your OS.
+
+For mobile clients, download/install WireGuard and configure it accordingly:
 
 ```
 [Interface]
