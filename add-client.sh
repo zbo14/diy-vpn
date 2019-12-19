@@ -1,9 +1,8 @@
 #!/bin/bash -e
 
-if [[ -z $1 ]]
-then
-  echo "Usage: add-client <username>"
-  exit
+if [ -z $1 ]; then
+    echo "Usage: add-client <username>"
+    exit
 fi
 
 ./easy-rsa/easyrsa3/easyrsa build-client-full $1
