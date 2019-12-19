@@ -1,9 +1,8 @@
 #!/bin/bash -e
 
-if [[ -z "$1" || -z "$2" || -z "$3" ]]
-then
-  echo "Usage: configure <gateway> <ip> <pubkey>"
-  exit
+if [ -z "$3" ]; then
+    echo "Usage: configure <gateway> <ip> <pubkey>"
+    exit
 fi
 
 rm -rf /etc/wireguard
