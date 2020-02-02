@@ -39,7 +39,6 @@ iptables -P FORWARD DROP
 
 iptables -A fw-interfaces -i wg0 -j ACCEPT
 iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o eth0 -j MASQUERADE
-iptables-save > /etc/iptables/rules.v4
 
 # Enable IP forwarding
 sysctl -w net.ipv4.ip_forward=1

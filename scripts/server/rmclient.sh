@@ -5,4 +5,4 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-wg set wg0 peer "$1" remove
+sudo wg set wg0 peer "$1" remove

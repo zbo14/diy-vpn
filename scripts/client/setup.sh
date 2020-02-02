@@ -1,14 +1,15 @@
 #!/bin/bash -e
 
 if [ "$#" -lt 3 ]; then
-    echo "Usage: configure <gateway> <ip> <pubkey>"
+    echo "Usage: setup <gateway> <ip> <pubkey>"
     exit 1
 fi
 
-rm -rf /etc/wireguard
-mkdir /etc/wireguard
+sudo mkdir -p /etc/wireguard
 
-cd /etc/wireguard
+mkdir -p ~/.wireguard
+cd ~/.wireguard
+
 umask 277
 wg genkey > privatekey
 wg pubkey < privatekey > publickey
@@ -25,6 +26,6 @@ DNS = 10.200.200.1
 AllowedIPs = 0.0.0.0/0
 Endpoint = '"$1"':51820
 PersistentKeepalive = 25
-PublicKey = '"$3" > wg0.conf
+PublicKey = '"$3" | sudo tee /etc/wireguard/wg0.conf > /dev/null
 
 echo "Client public key: $(cat publickey)"
