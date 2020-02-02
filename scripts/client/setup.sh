@@ -10,7 +10,7 @@ sudo mkdir -p /etc/wireguard
 mkdir -p ~/.wireguard
 cd ~/.wireguard
 
-umask 277
+umask 077
 wg genkey > privatekey
 wg pubkey < privatekey > publickey
 

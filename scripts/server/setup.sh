@@ -9,13 +9,13 @@ sudo chown -R unbound:unbound /var/lib/unbound
 mkdir -p ~/.wireguard
 cd ~/.wireguard
 
-umask 277
+umask 077
 wg genkey > privatekey
 wg pubkey < privatekey > publickey
 
 gpg --armor --symmetric privatekey
 gpgconf --reload gpg-agent
-sudo rm privatekey
+rm privatekey
 
 echo '[Interface]
 Address = 10.200.200.1/24
