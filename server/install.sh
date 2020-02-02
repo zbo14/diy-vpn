@@ -26,7 +26,7 @@ umask 277
 wg genkey > privatekey
 wg pubkey < privatekey > publickey
 
-gpg --armor --symmetric privatekey.gpg
+gpg --armor --symmetric privatekey
 gpgconf --reload gpg-agent
 rm privatekey
 

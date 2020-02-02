@@ -1,10 +1,11 @@
 #!/bin/bash -e
 
-sudo wg-quick up wg0
+wg-quick up wg0
 
 cd /etc/wireguard
-gpg --decrypt privatekey.gpg --output privatekey
+gpg --output privatekey --decrypt privatekey.asc
+gpgconf --reload gpg-agent
 
-sudo wg set wg0 private-key privatekey
+wg set wg0 private-key privatekey
 
 rm privatekey
