@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [ -z "$1" ]; then
-    echo "Usage: remove-client <pubkey>"
+    echo "Usage: rmclient <pubkey>"
     exit 1
 fi
 
