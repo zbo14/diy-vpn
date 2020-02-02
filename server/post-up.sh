@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-## Clear iptables rules
+# Clear iptables rules
 iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT
@@ -9,7 +9,7 @@ iptables -t mangle -F
 iptables -F
 iptables -X
 
-## Set iptables rules
+# Set iptables rules
 iptables -N TCP
 iptables -N UDP
 iptables -N fw-interfaces
@@ -41,8 +41,8 @@ iptables -A fw-interfaces -i wg0 -j ACCEPT
 iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o eth0 -j MASQUERADE
 iptables-save > /etc/iptables/rules.v4
 
-## Enable IP forwarding
+# Enable IP forwarding
 sysctl -w net.ipv4.ip_forward=1
 
-## Restart DNS server
+# Restart DNS server
 systemctl restart unbound
